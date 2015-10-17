@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html lang=en>
+	<head>
+  	<meta charset=UTF-8>
+  	<meta name=viewport content="width=device-width, initial-scale=1">
+  	<title>boilerplate</title>
+
+    <!-- <link rel=stylesheet href='//fonts.googleapis.com/css?family=Lato:300,700'> -->
+    <!-- <link rel=stylesheet href="style/sheet.css"> -->
+
+    <style>
+      body {
+        
+      }
+
+      body * {
+        box-sizing: border-box;
+      }
+
+      #game {
+        line-height: 1;
+        overflow: hidden;
+        width: 40rem;
+      }
+
+      #game > div {
+        position: relative;
+      }
+
+      #board {
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        width: 100%;
+      }
+
+      #board span {
+        background: orange;
+        display: inline-block;
+        float: left;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      #board span[data-segments] {
+        background: steelblue;
+      }
+
+      #board span:hover {
+        background: whitesmoke;
+      }
+
+      #board span[data-segments='3'] {
+        background: steelblue;
+      }
+
+      #board span[data-segments='2'] {
+        background: firebrick;
+      }
+
+      #board span[data-segments='1'] {
+        background: olivedrab;
+      }
+
+      #board span[data-segments='food'] {
+        background: rebeccapurple;
+      }
+
+
+      #game aside {
+        background-color: black;
+        bottom: 0;
+        color: white;
+        display: none;
+        left: 0;
+        opacity: .8;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      .gameover #game aside {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body class="single">
+    <main role=main id=main class=main>
+      <header>
+        <h1></h1>
+      </header>
+      <div>
+        <section id="game">
+          <div>
+            <menu id="board"></menu>
+            <aside id="story">
+              <h1>Game Over</h1>
+              <footer>
+                <button type=button id="restart">Play again</button>
+              </footer>
+            </aside>
+          </div>
+          <footer>
+            <button type=button id="start">Start</button>
+          </footer>
+
+        </section>
+
+      </div>
+      <footer>
+      </footer>
+    </main>
+
+    <!-- <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script> -->
+
+    <script src="../../_jquery/js/2.1.4.min.js"></script>
+    <script src="../../_lodash/js/3.10.1.min.js"></script>
+
+    <!-- // <script src="scripts/scripts.js"></script> -->
+    <script>
+      $(function(){
+        var SNK = {
+          DIRECTIONS: {"^": "v", ">": "<", "v": "^", "<": ">"},
+          GAME: {
+            playing: null,
+            tick: 500,
+            score: 0
+          },
+          GRID: [40, 40],
+          SNAKE: {
+            x: 0,
+            y: 0,
+            segments: 3,
+            direction: ">"
+          },
+          food: {
+            eat: function() {
+              
+            },
+            place: function() {
+              var cell = ["c", SNK.random(SNK.GRID[0] - 1), SNK.random(SNK.GRID[1] - 1)].join("-");
+              var $setting = $("#board [data-cell=" + cell + "]");
+
+              if (!$setting.attr("data-segments")) {
+                $setting.attr("data-segments", "food");
+              } else {
+                SNK.food.place();
+              }
+            }
+          },
+          game: {
+            pause: function() {
+              SNK.GAME.playing = false;
+            },
+            start: function() {
+              SNK.GAME.playing = true;              
+              SNK.game.step();
+              SNK.game.tick();
+            },
+            step: function() {
+              if (SNK.GAME.playing) {//  && SNK.GAME.score < 10
+                SNK.GAME.score += 10;
+                SNK.snake.slide();
+              } else {
+                SNK.snake.slide();
+              }
+            },
+            tick: function() {
+              if (SNK.GAME.playing) {
+                setTimeout(function(){
+                  SNK.game.step();
+                  SNK.game.tick();
+                }, SNK.GAME.tick);
+              }
+            }
+          },
+          snake: {
+            direction: function() {
+              var directions = ["^", ">", "v", "<"];
+              return directions[SNK.random(3)];
+            },
+            eyes: function() {
+              var cell = "[data-cell='" + ["c", SNK.SNAKE.x, SNK.SNAKE.y].join("-") + "']";
+              $("#board span").filter(cell).addClass("snake").text(SNK.SNAKE.direction);
+            },
+            head: function(head, axis) {
+              return ["c", head, axis].join("-");
+            },
+            paint: function(head, axis, index) {
+              var cell = "[data-cell='" + SNK.snake.head(head, axis) + "']";
+              var $cell = $("#board span").filter(cell);
+
+              if (!$cell.attr("data-segments")) {
+                $cell
+                  .attr("data-segments", (SNK.SNAKE.segments + 1) - index)
+                  .attr("data-direction", SNK.SNAKE.direction);
+              } else {
+                alert("Moo")
+                return false
+              }
+
+
+            },
+            place: function() {
+              SNK.SNAKE.x = SNK.random(6, SNK.GRID[0] - 6);
+              SNK.SNAKE.y = SNK.random(6, SNK.GRID[1] - 6);
+              SNK.SNAKE.direction = SNK.snake.direction();
+
+              SNK.snake.slither();
+            },
+            slide: function(start) {
+              var head = SNK.SNAKE.x;
+              var axis = SNK.SNAKE.y;
+              var direction = SNK.SNAKE.direction;
+              var i = 0;
+
+              $("#board span").removeClass("snake").text("");
+
+              if (direction === "^" || direction === "v") {
+                head -= (direction === "^") ? 1 : -1;  
+              } else {
+                axis -= (direction === "<") ? 1 : -1;
+              }
+
+              SNK.snake.paint(head, axis, 0);
+
+              SNK.SNAKE.x = head;
+              SNK.SNAKE.y = axis;
+              SNK.snake.eyes();
+
+              if (!start) {
+                $("#board [data-segments]").each(function(index){
+                  var $element = $("#board [data-segments]").eq(index);
+                  var segment = parseInt($element.attr("data-segments"), 10);
+
+                  if (!isNaN(segment)) {
+                    var reduced = $element.attr("data-segments") - 1;
+                    $element.attr("data-segments", reduced);
+                  }
+                });
+
+                $("#board [data-segments='0']").removeAttr("data-direction").removeAttr("data-segments");
+                
+              } else {
+                var cell = SNK.snake.head(head, axis);
+                var segment = (SNK.SNAKE.segments + 1) - start;
+
+                $("#board [data-cell=" + cell + "]").attr("data-segments", segment)
+              }
+            },
+            slither: function() {
+              for (var i = SNK.SNAKE.segments; i > 0; i -= 1) {
+                SNK.snake.slide(i);
+              }
+            },
+            turn: function(direction) {
+              if (direction !== "-") {
+                if (direction !== SNK.DIRECTIONS[SNK.SNAKE.direction]) {
+                  SNK.SNAKE.direction = direction; 
+                }
+              }
+            }
+          },
+          build: function() {// makes the game board
+            var rows = SNK.GRID[0];
+            var columns = SNK.GRID[1];
+
+            for (var row = 0; row < rows; row += 1) {
+              var $board = $("<div>");
+
+              for (var cell = 0; cell < columns; cell += 1) {
+                var id = ["c",row,cell].join("-");
+                var $cell = $("<span>").attr("data-cell", id).html(" ");
+
+                $board.append($cell);
+              }
+
+              $($board).children().clone().appendTo("#board");
+            }
+          },
+          listen: function() {
+            $("body").keydown(function(event) {
+              var keycode = event.keyCode;
+              var direction = "-";
+              var turn = function () {
+                event.preventDefault();
+                SNK.snake.turn(direction);
+              }
+
+              // console.log(keycode)
+
+              switch (keycode) {
+                case 32: SNK.game.step(); break;// space
+                case 37: direction = "<"; turn(); break;
+                case 38: direction = "^"; turn(); break;
+                case 39: direction = ">"; turn(); break;
+                case 40: direction = "v"; turn(); break;
+                default:
+                  direction = "-"; 
+                  break;
+              }
+            });
+
+            $("body").on("click", "#board span", function(){
+              if (SNK.GAME.playing) {
+                SNK.game.pause();
+              } else {
+                SNK.game.start(); 
+              }
+            });
+          },
+          random: function(min, max) {
+            return (max) ? _.random(min, max) : _.random(min);
+          },
+          init: function() {
+            this.build();
+            this.listen();
+            this.snake.place();
+            this.food.place();
+          }
+        };
+
+        window.SNK = SNK;
+        SNK.init();
+      });
+    </script>
+  </body>
+</html>
