@@ -1,0 +1,93 @@
+section {
+  margin: 0 auto;
+  width: 9rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+ol {
+  border-left: .1rem solid;
+  border-top: .1rem solid;
+  overflow: hidden;
+}
+
+li {
+  border-bottom: .1rem solid;
+  border-right: .1rem solid;
+  cursor: pointer;
+  float: left;
+  height: 0;
+  padding-top: 33.333333%;
+  position: relative;
+  width: 33.333333%;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.icon::before {
+  bottom: 0;
+  left: 0;
+  line-height: 1.5;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+aside {
+  bottom: 0;
+  display: none;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+aside strong {
+  position: relative;
+}
+
+.ended > aside {
+  background-color: rgba(255, 255, 255, .8);
+  display: block;
+}
+
+.over > aside {
+  background-color: rgba(0, 0, 0, .8);
+  color: whitesmoke;
+  display: block;
+}
+
+aside div {
+  margin: 0 auto;
+  width: 20rem;
+}
+
+aside strong {
+  display: block;
+  height: 10rem;
+  margin: -2rem auto 0;
+  width: 10rem;
+}
+
+aside strong::before {
+  font-size: 6rem;
+}
+
+aside button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  width: 2rem;
+}
+
+aside button::before {
+  font-size: 1.5rem;
+}
