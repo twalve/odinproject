@@ -38,6 +38,19 @@ li {
   width: 100%;
 }
 
+main > footer {
+  text-align: center;
+}
+
+footer select {
+  background: transparent;
+  border: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 1.5rem;
+  outline: none;
+}
+
 aside {
   bottom: 0;
   display: none;
