@@ -21,6 +21,10 @@ var $ = function(selector) {
       next: function() {
         TCTCTW.TURNS += 1;
         TCTCTW.SYMBOL = (TCTCTW.SYMBOL === "X") ? "O" : "X";
+
+        if (TCTCTW.TURNS % 2 !== 0) {
+          AI.think.turn();
+        }
       },
       over: function(ending) {
         var message;
@@ -45,13 +49,15 @@ var $ = function(selector) {
         return TCTCTW.SYMBOL + TCTCTW.SYMBOL + TCTCTW.SYMBOL;
       },
       replay: function() {
-        TCTCTW.ENDED = false;
-        TCTCTW.SELECTED = [];
-        TCTCTW.SYMBOL = "X";
-        TCTCTW.TURNS = 0;
-        TCTCTW.build();
-
-        document.querySelector("body").classList.remove("ended", "over");
+        // TCTCTW.ENDED = false;
+        // TCTCTW.SELECTED = [];
+        // TCTCTW.SYMBOL = "X";
+        // TCTCTW.TURNS = 0;
+        // TCTCTW.build();
+        // 
+        // document.querySelector("body").classList.remove("ended", "over");
+        
+        window.location.reload();
       },
       resolve: function() {
         for (var i = 0; i < TCTCTW.WINS.length; i += 1) {
@@ -82,6 +88,14 @@ var $ = function(selector) {
         TCTCTW.game.next();
       }
     },
+    opponent: {
+      human: function() {
+        window.location.assign("playerversusplayer.html");
+      },
+      robot: function() {
+        window.location.assign("playerversusai.html");
+      }
+    },
     build: function() {
       var target = document.querySelector("ol");
       var list = document.createElement("ol");
@@ -99,19 +113,25 @@ var $ = function(selector) {
       target.innerHTML = list.innerHTML;
     },
     listen: function() {
-      document.querySelector("body").addEventListener("click", function(event){
-        if (event.target.tagName.toLowerCase() === "li") {
+      var items = document.querySelectorAll("li");
+      [].forEach.call(items, function(item) {
+        item.addEventListener("click", function(event){
           TCTCTW.game.turn(event.target);
-        }
-      }, false);
+        }, false);
+      });
 
       document.querySelector("button").addEventListener("click", function(event){
         TCTCTW.game.replay();
+      }, false);
+
+      document.querySelector("select").addEventListener("change", function(event){
+        TCTCTW.opponent.human();
       }, false);
     },
     init: function() {
       this.build();
       this.listen();
+      AI.setup(this);
     }
   };
 

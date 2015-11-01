@@ -82,6 +82,14 @@ var $ = function(selector) {
         TCTCTW.game.next();
       }
     },
+    opponent: {
+      human: function() {
+        window.location.assign("playerversusplayer.html");
+      },
+      robot: function() {
+        window.location.assign("playerversusai.html");
+      }
+    },
     build: function() {
       var target = document.querySelector("ol");
       var list = document.createElement("ol");
@@ -107,6 +115,10 @@ var $ = function(selector) {
 
       document.querySelector("button").addEventListener("click", function(event){
         TCTCTW.game.replay();
+      }, false);
+
+      document.querySelector("select").addEventListener("change", function(event){
+        TCTCTW.opponent.robot();
       }, false);
     },
     init: function() {
