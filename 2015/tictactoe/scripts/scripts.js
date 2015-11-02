@@ -22,7 +22,7 @@ var $ = function(selector) {
         TCTCTW.TURNS += 1;
         TCTCTW.SYMBOL = (TCTCTW.SYMBOL === "X") ? "O" : "X";
 
-        if (TCTCTW.TURNS % 2 !== 0) {
+        if (TCTCTW.TURNS % 2 !== 0 && !TCTCTW.ENDED) {
           AI.think.turn();
         }
       },
@@ -49,14 +49,6 @@ var $ = function(selector) {
         return TCTCTW.SYMBOL + TCTCTW.SYMBOL + TCTCTW.SYMBOL;
       },
       replay: function() {
-        // TCTCTW.ENDED = false;
-        // TCTCTW.SELECTED = [];
-        // TCTCTW.SYMBOL = "X";
-        // TCTCTW.TURNS = 0;
-        // TCTCTW.build();
-        // 
-        // document.querySelector("body").classList.remove("ended", "over");
-        
         window.location.reload();
       },
       resolve: function() {
