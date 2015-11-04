@@ -138,7 +138,8 @@ var $$ = function(selector) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       },
       turn: function() {
-        setTimeout(AI.think.choose, AI.think.random(3,12) * 100);
+        AI.think.choose();
+        // setTimeout(AI.think.choose, AI.think.random(3,12) * 100);
       }
     },
     setup: function(game) {
