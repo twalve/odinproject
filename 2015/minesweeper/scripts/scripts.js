@@ -2,7 +2,7 @@
   var MNSWPR = {
     FLAG: false,
     MINES: {
-      count: 8,
+      count: 1,//8
       difficulty: "easy",
       set: []
     },
@@ -51,37 +51,35 @@
           return (parseInt(a, 10) + parseInt(b, 10));
         };
 
-        var ring = [
+        var ringed = [
           [-1,-1], [-1,0], [-1,1],
           [0,-1],/*[x],*/[0,1],
-          [1-1], [1,0], [1,1]
+          [1,-1], [1,0], [1,1]
         ];
 
         var ring = function(rowcol, count) {
-          for (var i = 0; i < rowcol.length; i += 1) {
+          console.log(rowcol)
 
+          for (var i = 0; i < ringed.length; i += 1) {
 
+            var row = add(rowcol[0], ringed[i][0]);
+            var col = add(rowcol[1], ringed[i][1]);
 
+            if (row > -1 && row < MNSWPR.GRID.rows) {
+              if (col > -1 && col < MNSWPR.GRID.columns) {
+                console.log(row + "_" + col)
+              }
+            }
 
-
-              console.log(add(rowcol[i], ring[count][0]))
-
-
-              // if ((add(rowcol[i], ring[count][0]) > 0 && rowcol[i] + ring[count][1] > 0) {
-              // 
-              // 
-              // 
-              // 
-              //   if (rowcol[i] + ring[count][0] < MNSWPR.GRID.rows && rowcol[i] + ring[count][1] < MNSWPR.GRID.columns) {
-              //     var ringer = document.querySelector("[data-grid='" + (rowcol[i] + ring[count][0]) + "_" + (rowcol[i] + ring[count][1]) + "']");
-              // 
-              //     console.log("[data-grid='" + ((rowcol[i] * 1) + ring[count][0]) + "_" + ((rowcol[i] * 1) + ring[count][1]) + "']")
-              // 
-              // 
-              //     // ringer.setAttribute('data-ring', ringer.getAttribute('data-ring') + 1);
-              //   }
-              // }
-
+            // if ((add(rowcol[i], ring[count][0]) > 0 && rowcol[i] + ring[count][1] > 0) {
+            //   if (rowcol[i] + ring[count][0] < MNSWPR.GRID.rows && rowcol[i] + ring[count][1] < MNSWPR.GRID.columns) {
+            //     var ringer = document.querySelector("[data-grid='" + (rowcol[i] + ring[count][0]) + "_" + (rowcol[i] + ring[count][1]) + "']");
+            //           
+            //     console.log("[data-grid='" + ((rowcol[i] * 1) + ring[count][0]) + "_" + ((rowcol[i] * 1) + ring[count][1]) + "']")
+            //         
+            //     // ringer.setAttribute('data-ring', ringer.getAttribute('data-ring') + 1);
+            //   }
+            // }
           }
 
           console.log("\n");
