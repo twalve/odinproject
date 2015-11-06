@@ -47,10 +47,52 @@
         }
       },
       sweeper: function() {
-        console.log(MNSWPR.MINES.set)
+        var add = function(a, b) {
+          return (parseInt(a, 10) + parseInt(b, 10));
+        };
 
-        
+        var ring = [
+          [-1,-1], [-1,0], [-1,1],
+          [0,-1],/*[x],*/[0,1],
+          [1-1], [1,0], [1,1]
+        ];
 
+        var ring = function(rowcol, count) {
+          for (var i = 0; i < rowcol.length; i += 1) {
+
+
+
+
+
+              console.log(add(rowcol[i], ring[count][0]))
+
+
+              // if ((add(rowcol[i], ring[count][0]) > 0 && rowcol[i] + ring[count][1] > 0) {
+              // 
+              // 
+              // 
+              // 
+              //   if (rowcol[i] + ring[count][0] < MNSWPR.GRID.rows && rowcol[i] + ring[count][1] < MNSWPR.GRID.columns) {
+              //     var ringer = document.querySelector("[data-grid='" + (rowcol[i] + ring[count][0]) + "_" + (rowcol[i] + ring[count][1]) + "']");
+              // 
+              //     console.log("[data-grid='" + ((rowcol[i] * 1) + ring[count][0]) + "_" + ((rowcol[i] * 1) + ring[count][1]) + "']")
+              // 
+              // 
+              //     // ringer.setAttribute('data-ring', ringer.getAttribute('data-ring') + 1);
+              //   }
+              // }
+
+          }
+
+          console.log("\n");
+
+        }
+
+        MNSWPR.MINES.set.sort();
+
+        for (var i = 0; i < MNSWPR.MINES.set.length; i += 1) {
+          ring(MNSWPR.MINES.set[i].split("_"), i);          
+        }
       },
       selector: function(target) {
         return ["[data-grid='", target,"']"].join("");
