@@ -1,0 +1,99 @@
+header fieldset {
+  display: inline-block;
+}
+
+header fieldset:last-child {
+  float: right;
+}
+
+ol {
+  border-bottom: .1rem solid;
+  border-left: .1rem solid;
+  overflow: hidden;
+}
+
+li {
+  border-right: .1rem solid;
+  border-top: .1rem solid;
+  display: block;
+  float: left;
+}
+
+section {
+  margin: 0 auto;
+  width: 11.25rem;
+}
+
+form {
+  margin: 1rem 0;
+}
+
+#flag {
+  position: relative;
+}
+
+#flag input {
+  visibility: hidden;
+}
+
+#flag span {
+  display: none;
+}
+
+#flag::after {
+  background-image: url(../graphics/sprites/tiles.jpg);
+  background-position-x: -1.25rem;
+  background-size: 400%;
+  content: "";
+  height: 1.25rem;
+  position: absolute;
+  top: 0;
+  width: 1.25rem;
+}
+
+#flag.flagged::after {
+  opacity: .5;
+}
+
+ol li {
+  background-image: url(../graphics/sprites/tiles.jpg);
+  background-position-x: -3.6rem;
+  background-size: 400%;
+  position: relative;
+}
+
+li[data-grid]::after {
+/*  background-image: url(../graphics/sprites/tiles.jpg);
+  background-position-x: 0;
+  background-size: 400%;*/
+  content: "";
+  height: 1.25rem;
+  position: absolute;
+  top: 0;
+  width: 1.25rem;
+}
+
+li[data-grid].clicked::after {
+  background-image: none;
+}
+
+.mined {
+  background-image: url(../graphics/sprites/tiles.jpg);
+  background-position-x: -2.425rem;
+  background-size: 400%;
+}
+
+.mined.flagged,
+ol .flagged {
+  background-image: url(../graphics/sprites/tiles.jpg);
+  background-position-x: -1.25rem;
+  background-size: 400%;
+}
+
+
+
+
+
+
+
+
