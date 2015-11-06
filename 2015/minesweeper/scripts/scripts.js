@@ -70,20 +70,9 @@
                 console.log(row + "_" + col)
               }
             }
-
-            // if ((add(rowcol[i], ring[count][0]) > 0 && rowcol[i] + ring[count][1] > 0) {
-            //   if (rowcol[i] + ring[count][0] < MNSWPR.GRID.rows && rowcol[i] + ring[count][1] < MNSWPR.GRID.columns) {
-            //     var ringer = document.querySelector("[data-grid='" + (rowcol[i] + ring[count][0]) + "_" + (rowcol[i] + ring[count][1]) + "']");
-            //           
-            //     console.log("[data-grid='" + ((rowcol[i] * 1) + ring[count][0]) + "_" + ((rowcol[i] * 1) + ring[count][1]) + "']")
-            //         
-            //     // ringer.setAttribute('data-ring', ringer.getAttribute('data-ring') + 1);
-            //   }
-            // }
           }
 
           console.log("\n");
-
         }
 
         MNSWPR.MINES.set.sort();
