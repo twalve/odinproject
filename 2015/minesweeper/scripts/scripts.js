@@ -2,7 +2,7 @@
   var MNSWPR = {
     FLAG: false,
     MINES: {
-      count: 1,//8
+      count: 8,
       difficulty: "easy",
       set: []
     },
@@ -12,10 +12,22 @@
       count: null,
       rows: 9
     },
+    RINGED: [
+      [-1,-1], [-1,0], [-1,1],
+      [0,-1],/*[x],*/[0,1],
+      [1,-1], [1,0], [1,1]
+    ],
     game: {
       clicked: function(target) {
         var selected = document.querySelector(MNSWPR.game.selector(target));
         selected.classList.add("clicked");
+
+        if (selected.classList.contains("mined")) {
+          selected.classList.add("boom");
+          MNSWPR.game.over();
+        } else {
+          
+        }
       },
       flag: function() {
         MNSWPR.FLAG = (MNSWPR.FLAG) ? false : true;
@@ -46,33 +58,26 @@
           MNSWPR.game.sweeper();
         }
       },
+      over: function() {
+        document.documentElement.classList.add("gameover");
+        alert("BOOM");
+      },
       sweeper: function() {
-        var add = function(a, b) {
-          return (parseInt(a, 10) + parseInt(b, 10));
-        };
-
-        var ringed = [
-          [-1,-1], [-1,0], [-1,1],
-          [0,-1],/*[x],*/[0,1],
-          [1,-1], [1,0], [1,1]
-        ];
-
         var ring = function(rowcol, count) {
-          console.log(rowcol)
+          for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
 
-          for (var i = 0; i < ringed.length; i += 1) {
-
-            var row = add(rowcol[0], ringed[i][0]);
-            var col = add(rowcol[1], ringed[i][1]);
+            var row = MNSWPR.core.add(rowcol[0], MNSWPR.RINGED[i][0]);
+            var col = MNSWPR.core.add(rowcol[1], MNSWPR.RINGED[i][1]);
 
             if (row > -1 && row < MNSWPR.GRID.rows) {
               if (col > -1 && col < MNSWPR.GRID.columns) {
-                console.log(row + "_" + col)
+
+                var ringer = document.querySelector("[data-grid='" + row + "_" + col + "']");
+                var count = parseInt(ringer.getAttribute('data-ring'), 10) || 0;
+                ringer.setAttribute('data-ring', count + 1);
               }
             }
           }
-
-          console.log("\n");
         }
 
         MNSWPR.MINES.set.sort();
@@ -113,6 +118,9 @@
       document.querySelector("section ol").innerHTML = list.innerHTML;
     },
     core: {
+      add: function(a, b) {
+        return (parseInt(a, 10) + parseInt(b, 10));
+      },
       leading: function(chars) {
         return (chars.toString().length > 1) ? chars : "0" + chars;
       },
