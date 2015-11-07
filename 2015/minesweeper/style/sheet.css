@@ -24,6 +24,10 @@ section {
   width: 11.25rem;
 }
 
+section > div {
+  position: relative;
+}
+
 form {
   margin: 1rem 0;
 }
@@ -42,7 +46,7 @@ form {
 
 #flag::after {
   background-image: url(../graphics/sprites/tiles.jpg);
-  background-position-x: -1.25rem;
+  background-position: -1.25rem 0;
   background-size: 400%;
   content: "";
   height: 1.25rem;
@@ -55,17 +59,55 @@ form {
   opacity: .5;
 }
 
-ol li {
+li[data-grid] {
   background-image: url(../graphics/sprites/tiles.jpg);
-  background-position-x: -3.6rem;
   background-size: 400%;
   position: relative;
 }
 
+li[data-grid] {
+  background-position: -3.6rem 0;
+}
+
+li[data-ring='1'] {
+  background-position: 0 -1.2rem;
+}
+
+li[data-ring='2'] {
+  background-position: -1.2rem -1.2rem;
+}
+
+li[data-ring='3'] {
+  background-position: -2.4rem -1.2rem;
+}
+
+li[data-ring='4'] {
+  background-position: -3.6rem -1.2rem;
+}
+
+li[data-ring='5'] {
+  background-position: 0 -2.4rem;
+}
+
+li[data-ring='6'] {
+  background-position: -1.2rem -2.4rem;
+}
+
+li[data-ring='7'] {
+  background-position: -2.4rem -2.4rem;
+}
+
+li[data-ring='8'] {
+  background-position: -3.6rem -2.4rem;
+}
+
+li[data-grid].mined {
+  background-position: -2.4rem 0;
+}
+
 li[data-grid]::after {
-/*  background-image: url(../graphics/sprites/tiles.jpg);
-  background-position-x: 0;
-  background-size: 400%;*/
+  background-image: url(../graphics/sprites/tiles.jpg);
+  background-size: 400%;
   content: "";
   height: 1.25rem;
   position: absolute;
@@ -73,27 +115,18 @@ li[data-grid]::after {
   width: 1.25rem;
 }
 
+li[data-grid]::after {
+  background-position: 0 0;
+}
+
 li[data-grid].clicked::after {
   background-image: none;
 }
 
-.mined {
-  background-image: url(../graphics/sprites/tiles.jpg);
-  background-position-x: -2.425rem;
-  background-size: 400%;
+li[data-grid].flagged::after {
+  background-position: -1.2rem 0;
 }
 
-.mined.flagged,
-ol .flagged {
-  background-image: url(../graphics/sprites/tiles.jpg);
-  background-position-x: -1.25rem;
-  background-size: 400%;
+.gameover li[data-grid].mined::after {
+  background-image: none;
 }
-
-
-
-
-
-
-
-
