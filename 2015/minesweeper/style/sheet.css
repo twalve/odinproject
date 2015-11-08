@@ -45,7 +45,7 @@ form {
 }
 
 #flag::after {
-  background-image: url(../graphics/sprites/tiles.jpg);
+  background-image: url(../graphics/sprites/tiles.png);
   background-position: -1.25rem 0;
   background-size: 400%;
   content: "";
@@ -60,7 +60,7 @@ form {
 }
 
 li[data-grid] {
-  background-image: url(../graphics/sprites/tiles.jpg);
+  background-image: url(../graphics/sprites/tiles.png);
   background-size: 400%;
   position: relative;
 }
@@ -102,11 +102,15 @@ li[data-ring='8'] {
 }
 
 li[data-grid].mined {
-  background-position: -2.4rem 0;
+  background-position: 0 -3.6rem;
+}
+
+li[data-grid].boom {
+  background-position: -1.2rem -3.6rem;
 }
 
 li[data-grid]::after {
-  background-image: url(../graphics/sprites/tiles.jpg);
+  background-image: url(../graphics/sprites/tiles.png);
   background-size: 400%;
   content: "";
   height: 1.25rem;
