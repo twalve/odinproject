@@ -62,6 +62,7 @@ form {
 li[data-grid] {
   background-image: url(../graphics/sprites/tiles.png);
   background-size: 400%;
+  cursor: pointer;
   position: relative;
 }
 
@@ -132,5 +133,9 @@ li[data-grid].flagged::after {
 }
 
 .gameover li[data-grid].mined::after {
+  background-image: none;
+}
+
+li[data-clear]::after {
   background-image: none;
 }

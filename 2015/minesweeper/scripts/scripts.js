@@ -1,5 +1,8 @@
 (function(){
   var MNSWPR = {
+    CLEARED: {
+      set: []
+    },
     FLAG: false,
     MINES: {
       count: 8,
@@ -18,15 +21,49 @@
       [1,-1], [1,0], [1,1]
     ],
     game: {
-      clicked: function(target) {
-        var selected = document.querySelector(MNSWPR.game.selector(target));
-        selected.classList.add("clicked");
+      clear: function(cell) {
 
-        if (selected.classList.contains("mined")) {
-          selected.classList.add("boom");
+        // console.log(!cell.getAttribute("data-ring") > 0)
+        // console.log(!cell.getAttribute("data-clear"))
+        
+        if (!cell.getAttribute("data-ring") > 0) {
+          cell.setAttribute("data-clear", true);
+          cell.classList.add("cleared");
+
+          MNSWPR.CLEARED.set.push(cell.getAttribute("data-grid"));
+        }
+
+        MNSWPR.game.clearer();
+      },
+      clearer: function() {
+        MNSWPR.CLEARED.set.sort();
+
+        console.log("clearer")
+
+
+        for (var i = 0; i < MNSWPR.CLEARED.set.length; i += 1) {
+          MNSWPR.game.ringer(MNSWPR.CLEARED.set[i].split("_"), 'data-clear');          
+        }
+
+        // TODO delete MNSWPR.CLEARED.set 
+      },
+      clicked: function(target) {
+        target.classList.add("clicked");
+
+        if (target.classList.contains("mined")) {
+          target.classList.add("boom");
           MNSWPR.game.over();
-        } else {
+        } else if (target.classList.contains("cleared")) {
+          // if () {
+          //   MNSWPR.game.over();
+          // } else {
+          //   return true
+          // }
           
+
+          console.log("cleared")
+        } else {
+          MNSWPR.game.clear(target);
         }
       },
       flag: function() {
@@ -62,32 +99,36 @@
         document.documentElement.classList.add("gameover");
         alert("BOOM");
       },
-      sweeper: function() {
-        var ring = function(rowcol, count) {
-          for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
+      ringer: function(rowcol, attribute) {
+        for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
 
-            var row = MNSWPR.core.add(rowcol[0], MNSWPR.RINGED[i][0]);
-            var col = MNSWPR.core.add(rowcol[1], MNSWPR.RINGED[i][1]);
+          var row = MNSWPR.core.add(rowcol[0], MNSWPR.RINGED[i][0]);
+          var col = MNSWPR.core.add(rowcol[1], MNSWPR.RINGED[i][1]);
 
-            if (row > -1 && row < MNSWPR.GRID.rows) {
-              if (col > -1 && col < MNSWPR.GRID.columns) {
+          if (row > -1 && row < MNSWPR.GRID.rows) {
+            if (col > -1 && col < MNSWPR.GRID.columns) {
+              var grid = [row, col].join("_");
+              var ringer = document.querySelector(MNSWPR.game.selector(grid));
+              var count = parseInt(ringer.getAttribute(attribute), 10) || 0;
 
-                var ringer = document.querySelector("[data-grid='" + row + "_" + col + "']");
-                var count = parseInt(ringer.getAttribute('data-ring'), 10) || 0;
-                ringer.setAttribute('data-ring', count + 1);
+              ringer.setAttribute(attribute, count + 1);
+
+              if (attribute === "data-clear") {
+                // MNSWPR.CLEARED.set.push(grid);
               }
             }
           }
         }
-
+      },
+      sweeper: function() {
         MNSWPR.MINES.set.sort();
 
         for (var i = 0; i < MNSWPR.MINES.set.length; i += 1) {
-          ring(MNSWPR.MINES.set[i].split("_"), i);          
+          MNSWPR.game.ringer(MNSWPR.MINES.set[i].split("_"), 'data-ring');          
         }
       },
-      selector: function(target) {
-        return ["[data-grid='", target,"']"].join("");
+      selector: function(target, attribute) {
+        return ["[",(attribute || "data-grid"),"='", target,"']"].join("");
       },
       setup: function() {
         this.mine();
@@ -98,7 +139,7 @@
         if (MNSWPR.FLAG) {
           MNSWPR.game.flagged(cell.dataset.grid);
         } else {
-          MNSWPR.game.clicked(cell.dataset.grid);
+          MNSWPR.game.clicked(cell);
         }
       }
     },
