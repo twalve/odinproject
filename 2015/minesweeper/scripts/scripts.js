@@ -1,6 +1,7 @@
 (function(){
   var MNSWPR = {
     CLEARED: {
+      clearing: null,
       set: []
     },
     FLAG: false,
@@ -22,11 +23,7 @@
     ],
     game: {
       clear: function(cell) {
-
-        // console.log(!cell.getAttribute("data-ring") > 0)
-        // console.log(!cell.getAttribute("data-clear"))
-        
-        if (!cell.getAttribute("data-ring") > 0) {
+        if (!cell.getAttribute("data-ring") > 0 && !cell.getAttribute("data-clear") > 0) {
           cell.setAttribute("data-clear", true);
           cell.classList.add("cleared");
 
@@ -36,16 +33,28 @@
         MNSWPR.game.clearer();
       },
       clearer: function() {
-        MNSWPR.CLEARED.set.sort();
+        MNSWPR.CLEARED.clearing = MNSWPR.CLEARED.set;
+        MNSWPR.CLEARED.set = [];
 
-        console.log("clearer")
+        var length = MNSWPR.CLEARED.clearing.length;
 
-
-        for (var i = 0; i < MNSWPR.CLEARED.set.length; i += 1) {
-          MNSWPR.game.ringer(MNSWPR.CLEARED.set[i].split("_"), 'data-clear');          
+        for (var i = 0; i < length; i += 1) {
+          MNSWPR.game.ringer(MNSWPR.CLEARED.clearing[i].split("_"), 'data-clear');
         }
 
-        // TODO delete MNSWPR.CLEARED.set 
+
+        if (!!MNSWPR.CLEARED.set.length) {
+          MNSWPR.CLEARED.set = _.uniq(MNSWPR.CLEARED.set);
+          MNSWPR.CLEARED.set.sort();
+
+          MNSWPR.game.click(MNSWPR.CLEARED.set[0])
+        } else {
+          
+          console.log(document.querySelectorAll("li[data-clear]").length)
+        }
+      },
+      click: function(target) {
+        document.querySelector(MNSWPR.game.selector(target)).click();
       },
       clicked: function(target) {
         target.classList.add("clicked");
@@ -53,15 +62,6 @@
         if (target.classList.contains("mined")) {
           target.classList.add("boom");
           MNSWPR.game.over();
-        } else if (target.classList.contains("cleared")) {
-          // if () {
-          //   MNSWPR.game.over();
-          // } else {
-          //   return true
-          // }
-          
-
-          console.log("cleared")
         } else {
           MNSWPR.game.clear(target);
         }
@@ -97,7 +97,7 @@
       },
       over: function() {
         document.documentElement.classList.add("gameover");
-        alert("BOOM");
+        // alert("BOOM"); TODO add gameover events
       },
       ringer: function(rowcol, attribute) {
         for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
@@ -114,7 +114,10 @@
               ringer.setAttribute(attribute, count + 1);
 
               if (attribute === "data-clear") {
-                // MNSWPR.CLEARED.set.push(grid);
+                // if (!ringer.getAttribute("data-clear") && !ringer.getAttribute("data-ring")) {
+                if (!ringer.getAttribute("data-ring") && !ringer.classList.contains("clicked")) {
+                  MNSWPR.CLEARED.set.push(grid);
+                }
               }
             }
           }
