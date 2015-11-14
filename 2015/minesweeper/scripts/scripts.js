@@ -49,11 +49,11 @@
           MNSWPR.game.click(MNSWPR.CLEARED.set[0])
         } else {
           var uncleared = 0;
-          var tiles = document.querySelectorAll("li");
+          var tiles = document.querySelectorAll("section > div li");
           length = tiles.length;
           
           for (i = 0; i < length; i += 1) {
-            var tile = 	document.querySelectorAll('li')[i];
+            var tile = tiles[i];
             var background = window.getComputedStyle(
               tile, ':after'
             ).getPropertyValue('background-image');
@@ -112,6 +112,9 @@
       },
       over: function() {
         document.documentElement.classList.add("gameover");
+      },
+      restart: function() {
+        document.location.reload(false);
       },
       ringer: function(rowcol, attribute) {
         for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
@@ -203,6 +206,9 @@
         MNSWPR.game.flag();
       }, false);
 
+      document.querySelector("header img").addEventListener("click", function(event){
+        MNSWPR.game.restart();
+      }, false);
     },
     search: function() {
       // check for a query string to set the game level

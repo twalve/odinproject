@@ -1,27 +1,137 @@
-header fieldset {
-  display: inline-block;
+
+main > header {
+  margin: 0 auto;
+  width: 12.5rem;
 }
 
-header fieldset:last-child {
-  float: right;
-}
-
-ol {
-  border-bottom: .1rem solid;
-  border-left: .1rem solid;
-  overflow: hidden;
-}
-
-li {
-  border-right: .1rem solid;
-  border-top: .1rem solid;
-  display: block;
-  float: left;
+main > header h1 {
+  margin: auto;
+  text-align: center;
+  width: 12.5rem;
 }
 
 section {
   margin: 0 auto;
   width: 12.5rem;
+}
+
+section > header {
+  background-color: #C3C3C3;
+  border: .1875rem solid #F5F5F5;
+  border-style: outset;
+  padding: .25rem;
+  position: relative;
+}
+
+section > header div {
+  border: .1875rem solid #F5F5F5;
+  border-style: inset;
+  position: relative;
+}
+
+header ul {
+  background-color: black;
+  border: .1rem inset;
+  display: block;
+  height: 1.65rem;
+  left: .25rem;
+  margin: .2rem;
+  padding-left: .2rem;
+  position: absolute;
+}
+
+header li {
+  background-image: url(../graphics/sprites/counter.png);
+  height: 1.4rem;
+  margin-right: .125rem;
+  width: .75rem;
+}
+
+header li._0 {
+  background-position: 0 0;
+}
+
+header li._1 {
+  background-position: -.75rem 0;
+}
+
+header li._2 {
+  background-position: -1.35rem 0;
+}
+
+header li._3 {
+  background-position: -2rem 0;
+}
+
+header li._4 {
+  background-position: -2.75rem 0;
+}
+
+header li._5 {
+  background-position: 0 -1.25rem;
+}
+
+header li._6 {
+  background-position: -.65rem -1.25rem;
+}
+
+header li._7 {
+  background-position: -1.4rem -1.25rem;
+}
+
+header li._8 {
+  background-position: -2.1rem -1.25rem;
+}
+
+header li._9 {
+  background-position: -2.7rem -1.25rem;
+}
+
+header span {
+  cursor: pointer;
+  display: block;
+  margin: .125rem auto 0;
+  width: 1.7rem;
+}
+
+header img {
+  display: inline-block;
+  background-image: url(../graphics/sprites/smilie.png);
+  width: 100%;
+}
+
+.gameover header img {
+  background-position: -1.625rem 0;
+}
+
+header label {
+  position: absolute;
+  right: .5rem;
+  top: .4rem;
+}
+
+header input {
+  visibility: hidden;
+}
+
+header label span {
+  display: none;
+}
+
+header label::after {
+  background-image: url(../graphics/sprites/tiles.png);
+  background-position: -1.25rem 0;
+  background-size: 400%;
+  content: "";
+  height: 1.25rem;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1.25rem;
+}
+
+header label.flagged::after {
+  opacity: .5;
 }
 
 section > div {
@@ -37,35 +147,17 @@ section > div > ol {
   border-style: inset;
 }
 
-form {
-  margin: 1rem 0;
+ol {
+  border-bottom: .1rem solid;
+  border-left: .1rem solid;
+  overflow: hidden;
 }
 
-#flag {
-  position: relative;
-}
-
-#flag input {
-  visibility: hidden;
-}
-
-#flag span {
-  display: none;
-}
-
-#flag::after {
-  background-image: url(../graphics/sprites/tiles.png);
-  background-position: -1.25rem 0;
-  background-size: 400%;
-  content: "";
-  height: 1.25rem;
-  position: absolute;
-  top: 0;
-  width: 1.25rem;
-}
-
-#flag.flagged::after {
-  opacity: .5;
+li {
+  border-right: .1rem solid;
+  border-top: .1rem solid;
+  display: block;
+  float: left;
 }
 
 li[data-grid] {
