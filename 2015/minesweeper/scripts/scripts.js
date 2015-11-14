@@ -6,7 +6,7 @@
     },
     FLAG: false,
     MINES: {
-      count: 8,
+      count: 10,
       difficulty: "easy",
       set: []
     },
@@ -210,9 +210,6 @@
     style: function() {
       var list = document.createElement("STYLE");
       var rules = [
-        "ol {",
-          "width: ", (MNSWPR.GRID.cells * MNSWPR.GRID.columns) + 1, "px;",
-        "}",
         "li {",
           "height: ", MNSWPR.GRID.cells, "px;",
           "width: ", MNSWPR.GRID.cells, "px;",

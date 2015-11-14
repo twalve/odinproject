@@ -21,11 +21,20 @@ li {
 
 section {
   margin: 0 auto;
-  width: 11.25rem;
+  width: 12.5rem;
 }
 
 section > div {
+  background-color: #C3C3C3;
+  border: .1875rem solid #F5F5F5;
+  border-style: outset;
+  padding: .25rem;
   position: relative;
+}
+
+section > div > ol {
+  border: .1875rem solid #F5F5F5;
+  border-style: inset;
 }
 
 form {
@@ -143,3 +152,6 @@ li[data-clear]::after {
 .gamewon li[data-grid].mined::after {
   background-position: -1.25rem 0; /* -3.75rem -3.7rem; */
 }
+
+
+
