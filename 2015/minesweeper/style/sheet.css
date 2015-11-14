@@ -132,10 +132,14 @@ li[data-grid].flagged::after {
   background-position: -1.2rem 0;
 }
 
+li[data-clear]::after {
+  background-image: none;
+}
+
 .gameover li[data-grid].mined::after {
   background-image: none;
 }
 
-li[data-clear]::after {
-  background-image: none;
+.gamewon li[data-grid].mined::after {
+  background-position: -1.25rem 0; /* -3.75rem -3.7rem; */
 }

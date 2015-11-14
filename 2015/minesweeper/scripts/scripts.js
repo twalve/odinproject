@@ -42,15 +42,30 @@
           MNSWPR.game.ringer(MNSWPR.CLEARED.clearing[i].split("_"), 'data-clear');
         }
 
-
         if (!!MNSWPR.CLEARED.set.length) {
           MNSWPR.CLEARED.set = _.uniq(MNSWPR.CLEARED.set);
           MNSWPR.CLEARED.set.sort();
 
           MNSWPR.game.click(MNSWPR.CLEARED.set[0])
         } else {
+          var uncleared = 0;
+          var tiles = document.querySelectorAll("li");
+          length = tiles.length;
           
-          console.log(document.querySelectorAll("li[data-clear]").length)
+          for (i = 0; i < length; i += 1) {
+            var tile = 	document.querySelectorAll('li')[i];
+            var background = window.getComputedStyle(
+              tile, ':after'
+            ).getPropertyValue('background-image');
+
+            if (background === "none") {
+              uncleared += 1;
+            }
+          }
+
+          if (MNSWPR.game.tally(uncleared)) {
+            document.documentElement.classList.add("gamewon");
+          }
         }
       },
       click: function(target) {
@@ -97,7 +112,6 @@
       },
       over: function() {
         document.documentElement.classList.add("gameover");
-        // alert("BOOM"); TODO add gameover events
       },
       ringer: function(rowcol, attribute) {
         for (var i = 0; i < MNSWPR.RINGED.length; i += 1) {
@@ -114,7 +128,6 @@
               ringer.setAttribute(attribute, count + 1);
 
               if (attribute === "data-clear") {
-                // if (!ringer.getAttribute("data-clear") && !ringer.getAttribute("data-ring")) {
                 if (!ringer.getAttribute("data-ring") && !ringer.classList.contains("clicked")) {
                   MNSWPR.CLEARED.set.push(grid);
                 }
@@ -132,6 +145,9 @@
       },
       selector: function(target, attribute) {
         return ["[",(attribute || "data-grid"),"='", target,"']"].join("");
+      },
+      tally: function(uncleared) {
+        return uncleared === MNSWPR.GRID.columns * MNSWPR.GRID.rows - MNSWPR.MINES.count;
       },
       setup: function() {
         this.mine();
